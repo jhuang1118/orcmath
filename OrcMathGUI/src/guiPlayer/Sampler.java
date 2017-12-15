@@ -120,7 +120,7 @@ public class Sampler extends GUIApplication {
 			}); 
 			viewObjects.add(cb);
 			
-			viewObjects.add(new Snake());
+			viewObjects.add(new Pharmaceuticals());
 			
 		}
 		
