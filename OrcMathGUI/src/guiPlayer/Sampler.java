@@ -127,10 +127,14 @@ public class Sampler extends GUIApplication implements FileRequester{
 			}); 
 			viewObjects.add(cb);
 			
+<<<<<<< HEAD
 			
 				
 				FileOpenButton fileButton = new FileOpenButton(490, 70, 120, 30, null,Sampler.this);
 				viewObjects.add(fileButton);
+=======
+			viewObjects.add(new Pharmaceuticals());
+>>>>>>> refs/heads/version2.2
 			
 		}
 		
