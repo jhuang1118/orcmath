@@ -30,7 +30,7 @@ public class CatalogScreen extends FullFunctionScreen {
 		viewObjects.add(supplyField);
 		barcodeField = new TextField(240, 90, 200, 30, "Text goes here", "Barcode");
 		viewObjects.add(barcodeField);
-		isLegalField = new TextField(140, 130, 200, 30, "Text goes here", "Is it legal?");
+		isLegalField = new TextField(140, 140, 200, 30, "Text goes here", "Is it legal?");
 		viewObjects.add(isLegalField);
 		add = new Button(10,250,100,40,"Add", new Action() {
 			
