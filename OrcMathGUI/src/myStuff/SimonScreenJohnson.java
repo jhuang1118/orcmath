@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import guiTeacher.components.Action;
+import guiTeacher.components.Button;
 import guiTeacher.components.TextLabel;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.ClickableScreen;
@@ -77,8 +78,17 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 			colors[i] = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
 		}
 		for(int j = 0; j < buttons.length; j++) {
-			final ButtonInterfaceJohnson b = getAButton();
-			b.setColor(colors[j]);
+			Button b = new Button(0,0 , 100, 100, "Button",new Action() {
+
+				@Override
+				public void act() {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			b.setBackgroundColor(colors[j]);
+			
 		    b.setX(x);
 		    b.setY(y);
 			b.setAction(new Action(){
@@ -125,9 +135,8 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		
 	}
 
-	private ButtonInterfaceJohnson getAButton() {
-		// TODO Auto-generated method stub
-		return null;
+	private ButtonInterfaceJohnson getAButton(int index) {
+		return buttons[index];
 	}
 
 	@Override

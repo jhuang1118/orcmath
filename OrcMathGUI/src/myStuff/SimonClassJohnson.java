@@ -4,20 +4,25 @@ import guiTeacher.GUIApplication;
 
 public class SimonClassJohnson extends GUIApplication {
 
+	public static SimonClassJohnson game;
+	public static SimonScreenJohnson screen;
+
 	public SimonClassJohnson(int width, int height) {
 		super(width, height);
-		// TODO Auto-generated constructor stub
+		setVisible(true);
 	}
 
 	@Override
 	public void initScreen() {
-		// TODO Auto-generated method stub
+		screen = new SimonScreenJohnson(getWidth(),getHeight());
+		setScreen(screen);
 
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		game = new SimonClassJohnson(800,800);
+		Thread runner = new Thread(game);
+		runner.start();
 	}
 
 }
