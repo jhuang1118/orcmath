@@ -4,32 +4,27 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import guiTeacher.components.Action;
 import guiTeacher.components.TextLabel;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.ClickableScreen;
 
-public class SimonScreenJohnson extends ClickableScreen implements Runnable {
-	
-	private TextLabel text;
-	private static ButtonInterfaceJohnson[] buttons;
+public class SimonScreenJohnson extends ClickableScreen implements Runnable{
+
 	private static ProgressInterfaceJohnson progress;
-	private ArrayList<MoveInterfaceJohnson> order;
-	
+	private ArrayList<MoveInterfaceJohnson> sequence;
+	private TextLabel label;
+	private static ButtonInterfaceJohnson[] buttons;
 	private int roundNumber;
 	private boolean acceptingInput;
 	private int sequenceIndex;
-	private int lastSelectedButton;
-
+	private static int lastSelectedButton;
+	
+	
 	public SimonScreenJohnson(int width, int height) {
-		super(width,height);
+		super(width, height);
 		Thread app = new Thread(this);
 		app.start();
-	}
-
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -39,74 +34,155 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable {
 		    viewObjects.add(b); 
 		}
 		progress = getProgress();
-		text = new TextLabel(130,230,300,40,"Let's play Simon!");
-		order = new ArrayList<MoveInterfaceJohnson>();
+		label = new TextLabel(130,230,300,40,"Let's play Simon!");
+		sequence = new ArrayList<MoveInterfaceJohnson>();
 		//add 2 moves to start
 		lastSelectedButton = -1;
-		order.add(randomMove());
-		order.add(randomMove());
+		sequence.add(randomMove());
+		sequence.add(randomMove());
 		roundNumber = 0;
 		viewObjects.add(progress);
-		viewObjects.add(text);
-		
+		viewObjects.add(label);
 	}
 
-	private MoveInterfaceJohnson randomMove() {
-		
-		int bIndex = (int)(Math.random()*buttons.length);
-	    while(bIndex == lastSelectedButton){
-	        bIndex = (int)(Math.random()*buttons.length);
-	    }
-	    return getMove(bIndex);
+	public MoveInterfaceJohnson randomMove() {
+		int selectedButton = (int)(Math.random()*buttons.length);
+		while(selectedButton == lastSelectedButton) {
+			selectedButton = (int)(Math.random()*buttons.length);
+		}
+		lastSelectedButton = selectedButton;
+		return getMove(selectedButton);
 	}
 
-	/**
-	 * Placeholder until partner finishes implementation of MoveInterface
-	 * @param bIndex
-	 * @return
-	 */
-	private MoveInterfaceJohnson getMove(int bIndex) {
+	private MoveInterfaceJohnson getMove(int selectedButton) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * Placeholder until partner finishes implementation of ProgressInterface
-	 * @return
-	 */
-	private ProgressInterfaceJohnson getProgress() {
-		// TODO Auto-generated method stub
-		return null;
+	Placeholder until partner finishes implementation of ProgressInterface
+	*/
+	private ProgressInterfaceJohnson getProgress() { 
+	    // TODO Auto-generated method stub 
+	    return null; 
 	}
 
-	private void addButtons() {
+	public void addButtons() {
 		int numberOfButtons = 6;
 		buttons = new ButtonInterfaceJohnson[numberOfButtons];
 		Color[] colors = new Color[numberOfButtons];
-		for(int i = 0; i < numberOfButtons; i++) {
-			colors[i] = new Color(generateNum(0,255),generateNum(0,255),generateNum(0,255));
-			ButtonInterfaceJohnson b = getAButton();
-			buttons[i] = b;
-			b.setColor(colors[i]); 
-		    b.setX();
-		    b.setY();
+		int x = 200;
+		int y = 200;
+		for(int i = 0; i < colors.length; i++) {
+			colors[i] = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
 		}
-		
-	}
-	
-	private int generateNum(int min, int max) {
-		return (int)((Math.random() * max) + min);
+		for(int j = 0; j < buttons.length; j++) {
+			final ButtonInterfaceJohnson b = getAButton();
+			b.setColor(colors[j]);
+		    b.setX(x);
+		    b.setY(y);
+			b.setAction(new Action(){
+				
+				public void act(){
+					if(acceptingInput) {
+						Thread blink = new Thread(new Runnable(){
+							public void run(){
+								b.highlight();
+								try {
+									Thread.sleep(800);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								b.dim();
+							}
+						});
+						blink.start();
+						if(b == sequence.get(sequenceIndex).getButton()) {
+							sequenceIndex++;
+							if(sequenceIndex == sequence.size()){ 
+							    Thread nextRound = new Thread(SimonScreenJohnson.this); 
+							    nextRound.start(); 
+							}
+						}
+						else {
+							gameOver();
+						}
+					}
+				}
+				
+			});
+			buttons[j] = b;
+			x += 50;
+			if(j == 4) {
+				y += 100;
+			}
+		}
 	}
 
-	/**
-	 * Placeholder until partner finishes implementation of ButtonInterface
-	 * @return
-	 */
+	protected void gameOver() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	private ButtonInterfaceJohnson getAButton() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public void run() {
+		label.setText("");
+	    nextRound();
+	}
 
+	private void nextRound() {
+		acceptingInput = false;
+		roundNumber++;
+		sequence.add(randomMove());
+		progress.setRound(roundNumber);
+		progress.setSequenceSize(sequence.size());
+		changeText("Simon's turn");
+		playSequence();
+		changeText("Your turn");
+		acceptingInput = true;
+		sequenceIndex = 0;
+	}
+	
+	public void changeText(String text) {
+		Thread changer = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				label.setText(text);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				label.setText("");
+			}
+		});
+	}
+	
+	public void playSequence() {
+		ButtonInterfaceJohnson b = null;
+		for(int i = 0; i < sequence.size(); i++) {
+			if(b != null) {
+				b.dim();
+			}
+			b = sequence.get(i).getButton();
+			b.highlight();
+			int sleepTime = (int) Math.log(Math.pow(2, roundNumber)) + 3;
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		b.dim();
+	}
 
 }
