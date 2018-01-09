@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import guiTeacher.components.Action;
-import guiTeacher.components.Button;
 import guiTeacher.components.TextLabel;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.ClickableScreen;
 
 public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 
+	private static final long serialVersionUID = 3565322860517751569L;
 	private static ProgressInterfaceJohnson progress;
 	private ArrayList<MoveInterfaceJohnson> sequence;
 	private TextLabel label;
@@ -24,8 +24,6 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 	
 	public SimonScreenJohnson(int width, int height) {
 		super(width, height);
-		Thread app = new Thread(this);
-		app.start();
 	}
 
 	@Override
@@ -35,7 +33,7 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		    viewObjects.add(b); 
 		}
 		progress = getProgress();
-		label = new TextLabel(130,230,300,40,"Let's play Simon!");
+		label = new TextLabel(70,100,300,40,"Let's play Simon!");
 		sequence = new ArrayList<MoveInterfaceJohnson>();
 		//add 2 moves to start
 		lastSelectedButton = -1;
@@ -56,41 +54,33 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 	}
 
 	private MoveInterfaceJohnson getMove(int selectedButton) {
-		// TODO Auto-generated method stub
-		return null;
+		return new MoveDevin(buttons[selectedButton]);
 	}
 
 	/**
 	Placeholder until partner finishes implementation of ProgressInterface
 	*/
 	private ProgressInterfaceJohnson getProgress() { 
-	    // TODO Auto-generated method stub 
-	    return null; 
+	   return new ProgressDevin();
 	}
 
 	public void addButtons() {
 		int numberOfButtons = 6;
 		buttons = new ButtonInterfaceJohnson[numberOfButtons];
 		Color[] colors = new Color[numberOfButtons];
-		int x = 200;
+		colors[0] = Color.blue;
+		colors[1] = Color.red;
+		colors[2] = Color.green;
+		colors[3] = Color.yellow;
+		colors[4] = Color.orange;
+		colors[5] = Color.pink;
+		int x = 100;
 		int y = 200;
-		for(int i = 0; i < colors.length; i++) {
-			colors[i] = new Color((int)(Math.random()*256),(int)(Math.random()*256),(int)(Math.random()*256));
-		}
 		for(int j = 0; j < buttons.length; j++) {
-			Button b = new Button(0,0 , 100, 100, "Button",new Action() {
-
-				@Override
-				public void act() {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
-			b.setBackgroundColor(colors[j]);
-			
-		    b.setX(x);
-		    b.setY(y);
+			final ButtonInterfaceJohnson b = getButton(50,j*70+70,60,60);
+			b.setColor(colors[j]);
+			b.setX(x);
+			b.setY(y);
 			b.setAction(new Action(){
 				
 				public void act(){
@@ -123,10 +113,7 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 				
 			});
 			buttons[j] = b;
-			x += 50;
-			if(j == 4) {
-				y += 100;
-			}
+			y += 100;
 		}
 	}
 
@@ -135,9 +122,12 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		
 	}
 
-	private ButtonInterfaceJohnson getAButton(int index) {
-		return buttons[index];
+	private ButtonInterfaceJohnson getButton(int x, int y, int w, int h) {
+		ButtonDevin button = new ButtonDevin(x,y,w,h,"", null);
+		return button;
 	}
+	
+	
 
 	@Override
 	public void run() {
@@ -173,6 +163,7 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 				label.setText("");
 			}
 		});
+		changer.start();
 	}
 	
 	public void playSequence() {
@@ -192,6 +183,6 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 			}
 		}
 		b.dim();
-	}
+	}  
 
 }
