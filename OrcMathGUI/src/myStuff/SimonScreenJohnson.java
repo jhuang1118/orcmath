@@ -47,8 +47,9 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		roundNumber++;
 		increment++;
 		
-		progress.setNum(roundNumber, sequence.size());
 		sequence.add(randomMove());
+		progress.setNum(roundNumber, sequence.size());
+		
 		
 		changeText("Simon's turn");
 		
