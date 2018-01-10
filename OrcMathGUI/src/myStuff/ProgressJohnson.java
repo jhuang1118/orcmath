@@ -7,13 +7,13 @@ import java.awt.Graphics2D;
 
 import guiTeacher.components.Component;
 
-public class ProgressDevin extends Component implements ProgressInterfaceJohnson {
+public class ProgressJohnson extends Component implements ProgressInterfaceJohnson {
 	private int roundNum;
 	private int sequenceNum;
 	private boolean lose;
 	
 	
-	public ProgressDevin() {
+	public ProgressJohnson() {
 		super(250,50,400,200);
 	}
 

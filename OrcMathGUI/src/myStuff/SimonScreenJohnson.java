@@ -159,18 +159,18 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 	}
 
 	private MoveInterfaceJohnson getMove(int selectedButton) {
-		return new MoveDevin(buttons[selectedButton]);
+		return new MoveJohnson(buttons[selectedButton]);
 	}
 
 	/**
 	Placeholder until partner finishes implementation of ProgressInterface
 	*/
 	private ProgressInterfaceJohnson getProgress() { 
-	   return new ProgressDevin();
+	   return new ProgressJohnson();
 	}
 	
 	private ButtonInterfaceJohnson getButton(int x, int y, int w, int h) {
-		ButtonDevin button = new ButtonDevin(x,y,w,h,"", null);
+		ButtonJohnson button = new ButtonJohnson(x,y,w,h,"", null);
 		return button;
 	}
 	
