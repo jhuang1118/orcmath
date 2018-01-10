@@ -11,8 +11,12 @@ import guiTeacher.userInterfaces.ClickableScreen;
 
 public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 
-	private static final long serialVersionUID = 3565322860517751569L;
 	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 496661046915956149L;
 	public ProgressInterfaceJohnson progress;
 	public ArrayList<MoveInterfaceJohnson> sequence;
 	
@@ -31,7 +35,47 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		Thread app = new Thread(this);
 		app.start();
 	}
+	
+	@Override
+	public void run() {
+		label.setText("");
+	    nextRound();
+	}
 
+	private void nextRound() {
+		acceptingInput = false;
+		roundNumber++;
+		increment++;
+		
+		progress.setNum(roundNumber, sequence.size());
+		sequence.add(randomMove());
+		
+		changeText("Simon's turn");
+		
+		playSequence();
+		
+		changeText("Your turn");
+		sequenceIndex = 0;
+		acceptingInput = true;
+	}
+	public void playSequence() {
+		
+		ButtonInterfaceJohnson b;
+		for(int i = 0; i < sequence.size(); i++) {
+			
+			b = sequence.get(i).getButton();
+			b.highlight();
+			int sleepTime = (int) Math.log(Math.pow(2, roundNumber)) + 3;
+			try {
+				Thread.sleep(sleepTime);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			b.dim();
+		}
+		
+	}
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		sequence = new ArrayList<MoveInterfaceJohnson>();
@@ -54,16 +98,6 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		label = new TextLabel(70,100,300,40,"Let's play Simon!");
 		viewObjects.add(label);
 
-		
-
-		for(ButtonInterfaceJohnson b: buttons){ 
-		    viewObjects.add(b); 
-		}
-		progress = getProgress();
-		viewObjects.add(progress);
-		
-		
-	
 		for(int j = 0; j < buttons.length; j++) {
 			final ButtonInterfaceJohnson b = getButton(50,j*70+70,60,60);
 			buttons[j] = b;
@@ -106,6 +140,12 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 			progress.setNum(roundNumber, increment);
 			sequence.add(randomMove());
 			sequence.add(randomMove());
+			
+			for(int i = 0; i < buttons.length; i++){ 
+			    System.out.println(buttons[i]);
+				viewObjects.add(buttons[i]); 
+			}
+			viewObjects.add(progress);
 		}
 	}
 
@@ -114,7 +154,7 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		while(selectedButton == lastSelectedButton) {
 			selectedButton = (int)(Math.random()*buttons.length);
 		}
-		lastSelectedButton = selectedButton;
+		//lastSelectedButton = selectedButton;
 		return getMove(selectedButton);
 	}
 
@@ -136,23 +176,6 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 	
 	
 
-	@Override
-	public void run() {
-		label.setText("");
-	    nextRound();
-	}
-
-	private void nextRound() {
-		acceptingInput = false;
-		roundNumber++;
-		sequence.add(randomMove());
-		progress.setNum(roundNumber, sequence.size());
-		changeText("Simon's turn");
-		playSequence();
-		changeText("Your turn");
-		acceptingInput = true;
-		sequenceIndex = 0;
-	}
 	
 	public void changeText(String text) {
 		Thread changer = new Thread(new Runnable() {
@@ -172,22 +195,6 @@ public class SimonScreenJohnson extends ClickableScreen implements Runnable{
 		changer.start();
 	}
 	
-	public void playSequence() {
-		ButtonInterfaceJohnson b;
-		for(int i = 0; i < sequence.size(); i++) {
-			
-			b = sequence.get(i).getButton();
-			b.highlight();
-			int sleepTime = (int) Math.log(Math.pow(2, roundNumber)) + 3;
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			b.dim();
-		}
-		
-	}  
+	  
 
 }

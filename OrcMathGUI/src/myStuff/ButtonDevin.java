@@ -8,23 +8,23 @@ import guiTeacher.components.Button;
 
 public class ButtonDevin extends Button implements ButtonInterfaceJohnson {
 	
-	private Action buttonAction;
+	
 	private Color buttonColor;
 
 	public ButtonDevin(int x, int y, int w, int h, String text, Action action) {
-		super(x+20, y, w, h, text, action);
+		super(x+20, y, w, h, "", null);
+		update();
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void setAction(Action action) {
-		this.buttonAction = action;
-
+	public void setColor(Color color) {
+		this.buttonColor = color;
+		this.setBackground(color);
+		update();
 	}
-
-	@Override
 	public void highlight() {
-		this.setBackground(Color.BLACK);
+		this.setBackground(Color.black);
 		update();
 
 	}
@@ -36,11 +36,6 @@ public class ButtonDevin extends Button implements ButtonInterfaceJohnson {
 
 	}
 
-	@Override
-	public void setColor(Color color) {
-		buttonColor = color;
-		this.setBackground(color);
-		update();
-	}
+	
 
 }

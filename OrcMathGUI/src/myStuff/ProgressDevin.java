@@ -3,7 +3,7 @@ package myStuff;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
-import com.itextpdf.text.Font;
+
 
 import guiTeacher.components.Component;
 
@@ -25,7 +25,7 @@ public class ProgressDevin extends Component implements ProgressInterfaceJohnson
 
 	@Override 
 	public void update(Graphics2D g) {
-			clear();
+			
 			clear();
 			if(lose) 
 			{

@@ -2,7 +2,7 @@ package myStuff;
 
 public class MoveDevin implements MoveInterfaceJohnson {
 	
-	ButtonInterfaceJohnson button;
+	private ButtonInterfaceJohnson button;
 	
 	public MoveDevin(ButtonInterfaceJohnson button) {
 		this.button = button;
