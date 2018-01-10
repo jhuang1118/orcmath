@@ -26,31 +26,26 @@ public class ProgressDevin extends Component implements ProgressInterfaceJohnson
 	@Override 
 	public void update(Graphics2D g) {
 			clear();
-		if(lose) {
-			g.setColor(Color.RED);
-			g.fillRect(300, 0, 200, 100);
-			g.setColor(Color.black);
-			g.drawString("Round: "+roundNum,10,55);
-			g.drawString("Current Sequence Length: "+sequenceNum,5,100);
-			g.drawString("LOL YOU CAN'T EVEN PLAY A KID GAME",5,150);
-		}else {
-			g.setColor(Color.GREEN);
-			g.fillRect(300, 0, 200, 100);
-			g.setColor(Color.black);
-			g.drawString("Round: "+roundNum,5,55);
-			g.drawString("Current Sequence Length: "+sequenceNum,5,100);
-		}
+			clear();
+			if(lose) 
+			{
+				g.setColor(Color.black);
+				g.drawString("Game Over.", 0, 50);
+			}
+			else
+			{
+				g.setColor(Color.black);
+				g.drawString("Round: "+roundNum, 30, 35);
+				g.drawString("Sequence: "+sequenceNum, 30, 20);
+			}
 
-	}
-	@Override
-	public void setRound(int x) {
-		this.roundNum = x;
-		update();
 	}
 
 	@Override
-	public void setSequenceSize(int x) {
-		this.sequenceNum = x;
+	public void setNum(int roundNum, int sequenceNum) {
+		this.roundNum = roundNum;
+		this.sequenceNum = sequenceNum;
 		update();
 	}
+	
 }
