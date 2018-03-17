@@ -24,7 +24,7 @@ public class MenuScreen extends FullFunctionScreen {
 	}
 
 	public void initAllObjects(List<Visible> viewObjects) {
-			Graphic background = new Graphic(0, 0, 1280, 1040, "resources/screenPics/cardSystem.png");
+			Graphic background = new Graphic(0, 0, 1280, 1040, "resources/menubgrnd.jpg");
 			background.setVisible(true);
 			viewObjects.add(background);
 			StyledComponent.setButtonOutline(true);
@@ -55,7 +55,7 @@ public class MenuScreen extends FullFunctionScreen {
 
 			});
 			quittext = new TextArea(1050,900,200,75, "Quit");
-			name = new TextArea(480, 200, 600, 200, "Viva Las Vegas");
+			name = new TextArea(640, 520, 400, 400, "Viva Las Vegas");
 			
 			viewObjects.add(new Graphic(0, 0, getWidth(), getHeight(), "resources/homescreen.png"));
 			viewObjects.add(new Graphic(750, 160, 150, 150, "resources/mapleleaf.png"));
