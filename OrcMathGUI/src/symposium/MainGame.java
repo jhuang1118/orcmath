@@ -18,7 +18,6 @@ public class MainGame extends GUIApplication {
 	public static BlackjackScreen bj;
 	public static MenuScreen menu;
 	public static DiceScreen dice;
-	public ArrayList<Card> deck;
 	private static Clip g;
 
 	public MainGame(int width, int height) {
