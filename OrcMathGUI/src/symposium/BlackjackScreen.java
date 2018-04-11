@@ -17,7 +17,8 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public static final String[] CARD_SUITS = {"Clubs", "Diamonds", "Hearts", "Spades"};
 	public ArrayList<Card> deck;
 	public static final int CLUB = 0, DIAMOND = 1, HEART = 2, SPADE = 3;
-	
+	public ArrayList<Card> pHand;
+	public ArrayList<Card> dHand;
 
 	public BlackjackScreen(int width, int height) {
 		super(width,height);
@@ -25,14 +26,18 @@ public class BlackjackScreen extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
+		pHand = new ArrayList<Card>();
+		dHand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
 		generateRegDeck(deck);
 		shuffleDeck(deck, getRandomInteger(1,4));
+		dealInitHand(deck,pHand,2);
+		dealInitHand(deck,dHand,2);
+		//make function later to show the card images
 		
 	}
 	
-	public ArrayList<Card> generateRegDeck(ArrayList<Card> cardArr)
-	{
+	public ArrayList<Card> generateRegDeck(ArrayList<Card> cardArr) {
 		deck = cardArr;
 		
 		for (int r = ACE; r <= KING; r++) {
@@ -67,8 +72,7 @@ public class BlackjackScreen extends FullFunctionScreen {
 			return deck;
 	}
 	
-	public int getRandomInteger(int lower, int upper)
-	{
+	public int getRandomInteger(int lower, int upper) {
 		
 		int multiplier = upper - (lower - 1);
 		int rnd = (int)((Math.random() * multiplier) + lower);
@@ -78,5 +82,15 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public ArrayList<Card> delete(ArrayList<Card> cardArr,int index) {
 		cardArr.remove(index);
 		return cardArr;
+	}
+	
+	public void deal(ArrayList<Card> d, ArrayList<Card> hand) {
+		
+	}
+	public void dealInitHand(ArrayList<Card> d, ArrayList<Card> hand, int initSize) {
+		for(int i = 0; i < initSize; i++) {
+			hand.add(d.get(i));
+			delete(d,i);
+		}
 	}
 }
