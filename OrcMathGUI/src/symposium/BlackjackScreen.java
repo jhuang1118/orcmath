@@ -7,6 +7,17 @@ import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class BlackjackScreen extends FullFunctionScreen {
+	/*
+	 * Outline for Game
+	 *   DONE: Create and shuffle a deck of cards
+         DONE: Create two BlackjackHands, userHand and dealerHand
+         DONE: Deal two cards into each hand
+         Check if dealer has blackjack (if so, game ends)
+         Check if user has blackjack (if so, game ends)
+         User draws cards (if user goes over 21, game ends)
+         Dealer draws cards
+         Check for winner
+	 */
 	
 	/**
 	 * 
@@ -87,6 +98,16 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public void deal(ArrayList<Card> d, ArrayList<Card> hand) {
 		
 	}
+	
+	public void hit() {
+		
+	}
+	
+	public void stand() {
+		
+	}
+	
+	
 	public void dealInitHand(ArrayList<Card> d, ArrayList<Card> hand, int initSize) {
 		for(int i = 0; i < initSize; i++) {
 			hand.add(d.get(i));
