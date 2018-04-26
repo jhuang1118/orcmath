@@ -29,37 +29,57 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public static final int[] CARD_VALUES = {1,2,3,4,5,6,7,8,9,10,10,10,10};
 	public ArrayList<Card> deck;
 	public static final int CLUB = 0, DIAMOND = 1, HEART = 2, SPADE = 3;
-	public ArrayList<Card> pHand;
 	public boolean isPlayerTurn;
+	public ArrayList<Card> pHand;
+	public ArrayList<Card> pHand2;
 	public ArrayList<Card> dHand;
+	public int money;
 
-	public BlackjackScreen(int width, int height) {
-		super(width,height);
-	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		isPlayerTurn = true;
+		money = 1000;
 		pHand = new ArrayList<Card>();
+		pHand2 = new ArrayList<Card>();
 		dHand = new ArrayList<Card>();
 		deck = new ArrayList<Card>();
+		playGame();
+	}
+	
+	public void playGame() {
 		generateRegDeck(deck);
 		shuffleDeck(deck, getRandomInteger(1,4));
 		dealInitHand(deck,pHand,2);
 		dealInitHand(deck,dHand,2);
 		//make function later to show the card images
+		while(countSum(pHand) <= 21 && isPlayerTurn) {
+			if(isPair(pHand)) {
+				if(askSplit()) {
+					split();
+				}
+			}
+		}
+		
 		
 		
 		
 		
 		
 		/*if(winner()) {
-			System.out.println("Yay! You won the round.");
-		}
-		else
-			System.out.println("Oh no! You lost the round");*/
+		System.out.println("Yay! You won the round.");
 	}
-	
+	else
+		System.out.println("Oh no! You lost the round");*/
+	}
+
+	public void split() {
+		pHand2.add(pHand.get(1));
+		pHand.remove(1);
+		deal(pHand);
+		deal(pHand2);
+	}
+
 	public ArrayList<Card> generateRegDeck(ArrayList<Card> cardArr) {
 		deck = cardArr;
 		
@@ -75,7 +95,9 @@ public class BlackjackScreen extends FullFunctionScreen {
 		}	
 		return cardArr;
 	}
-	
+	public boolean isPair(ArrayList<Card> hand) {
+		return hand.get(0).getValue() == hand.get(1).getValue();
+	}
 	public ArrayList<Card> shuffleDeck(ArrayList<Card> cardArr, int shuffleTime){
 		
 			ArrayList<Card> shuffledDeck = new ArrayList<Card>();
@@ -125,12 +147,15 @@ public class BlackjackScreen extends FullFunctionScreen {
 		}
 	}
 	
+	public boolean askSplit() {
+		return false;
+	}
 	public void stand() {
 		if(isPlayerTurn) {
-			isPlayerTurn = false;
+			setPlayerTurn(false);
 		}
 		else
-			isPlayerTurn = true;
+			setPlayerTurn(true);
 	}
 	public int countSum(ArrayList<Card> hand) {
 		int sum = 0;
@@ -149,5 +174,28 @@ public class BlackjackScreen extends FullFunctionScreen {
 			hand.add(d.get(i));
 			delete(d,i);
 		}
+	}
+	
+	public ArrayList<Card> getDeck() {
+		return deck;
+	}
+
+	public void setDeck(ArrayList<Card> deck) {
+		this.deck = deck;
+	}
+
+	public boolean isPlayerTurn() {
+		return isPlayerTurn;
+	}
+
+	public void setPlayerTurn(boolean isPlayerTurn) {
+		this.isPlayerTurn = isPlayerTurn;
+	}
+
+	
+	
+
+	public BlackjackScreen(int width, int height) {
+		super(width,height);
 	}
 }
