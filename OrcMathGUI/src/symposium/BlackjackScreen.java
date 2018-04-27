@@ -34,12 +34,17 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public ArrayList<Card> pHand2;
 	public ArrayList<Card> dHand;
 	public int money;
+	public int bet;
 
-
+	public BlackjackScreen(int width, int height) {
+		super(width,height);
+	}
+	
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		isPlayerTurn = true;
 		money = 1000;
+		bet = 0;
 		pHand = new ArrayList<Card>();
 		pHand2 = new ArrayList<Card>();
 		dHand = new ArrayList<Card>();
@@ -50,6 +55,7 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public void playGame() {
 		generateRegDeck(deck);
 		shuffleDeck(deck, getRandomInteger(1,4));
+		placeBet();
 		dealInitHand(deck,pHand,2);
 		dealInitHand(deck,dHand,2);
 		//make function later to show the card images
@@ -59,6 +65,7 @@ public class BlackjackScreen extends FullFunctionScreen {
 					split();
 				}
 			}
+			
 		}
 		
 		
@@ -71,6 +78,32 @@ public class BlackjackScreen extends FullFunctionScreen {
 	}
 	else
 		System.out.println("Oh no! You lost the round");*/
+	}
+
+	public void placeBet() {
+		//ask user to place bet;
+		if(bet <= money) {
+			money -= bet;
+		}
+		else
+			System.out.println("Please enter an amount between 1 and " +
+			String.valueOf(money));
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	public int getBet() {
+		return bet;
+	}
+
+	public void setBet(int bet) {
+		this.bet = bet;
 	}
 
 	public void split() {
@@ -156,6 +189,7 @@ public class BlackjackScreen extends FullFunctionScreen {
 		}
 		else
 			setPlayerTurn(true);
+			winner();
 	}
 	public int countSum(ArrayList<Card> hand) {
 		int sum = 0;
@@ -195,7 +229,5 @@ public class BlackjackScreen extends FullFunctionScreen {
 	
 	
 
-	public BlackjackScreen(int width, int height) {
-		super(width,height);
-	}
+	
 }
