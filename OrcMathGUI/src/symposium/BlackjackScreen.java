@@ -65,6 +65,9 @@ public class BlackjackScreen extends FullFunctionScreen {
 					split();
 				}
 			}
+			else if(checkDoubleDown()) {
+				doubleDown();
+			}
 			
 		}
 		
@@ -105,14 +108,31 @@ public class BlackjackScreen extends FullFunctionScreen {
 	public void setBet(int bet) {
 		this.bet = bet;
 	}
-
+	public boolean checkDoubleDown() {
+		int[] arr = {9,10,11};
+		if(indexOf(countSum(pHand), arr) != -1) {
+			return true;
+		}
+		return false;
+	}
+	public void doubleDown() {
+		bet *= 2;
+	}
 	public void split() {
 		pHand2.add(pHand.get(1));
 		pHand.remove(1);
 		deal(pHand);
 		deal(pHand2);
 	}
-
+	private int indexOf(int e, int[] arr) {
+		for(int i = 0; i < arr.length; i++) {
+			if (arr[i] == (e)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	
 	public ArrayList<Card> generateRegDeck(ArrayList<Card> cardArr) {
 		deck = cardArr;
 		
