@@ -6,7 +6,8 @@ import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class DiceScreen extends FullFunctionScreen {
-
+	
+	
 	public DiceScreen(int width, int height) {
 		super(width,height);
 	}
@@ -16,5 +17,6 @@ public class DiceScreen extends FullFunctionScreen {
 		// TODO Auto-generated method stub
 		
 	}
-
+	//s
+		
 }
