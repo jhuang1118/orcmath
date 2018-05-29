@@ -12,7 +12,7 @@ public class Card {
 	public Card(int rank, int suit, String cardImg, int value) {
 		this.rank = rank;
 		this.suit = suit;
-		this.cardImg = new Graphic(0,0,100,100,"cardImages/" + rank + suit + ".png");
+		this.cardImg = new Graphic(0,0,100,100, cardImg);
 		this.value = value;
 	}
 

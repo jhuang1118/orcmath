@@ -140,7 +140,7 @@ public class BlackjackScreen extends FullFunctionScreen {
 			for(int s = 0; s <= 13; s++) {
 				for (int t = CLUB; s <= SPADE; s++){
 				
-					Card card = new Card(r,t,r + "-" + t + ".png",s);
+					Card card = new Card(r,t, "resources/cardImages/" + r + "-" + t + ".png",s);
 					
 					cardArr.add(card);
 				}
